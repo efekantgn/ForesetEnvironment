@@ -12,7 +12,7 @@ public class PlayerSpawner : MonoBehaviour
         SpawnPlayer();
     }
 
-    public void SpawnPlayer()
+    private void SpawnPlayer()
     {
         Instantiate(_player, transform.position, transform.rotation);
     }

@@ -6,14 +6,14 @@ using UnityEngine.InputSystem;
 
 public class Look : MonoBehaviour
 {
-    [SerializeField] float _xSensivity = 1;
-    [SerializeField] float _ySensivity = 1;
+    [SerializeField] private  float _xSensivity = 1;
+    [SerializeField] private float _ySensivity = 1;
 
-    [SerializeField] Transform _playerCamera;
-    [SerializeField] float _xClamp=89f;
-    float _xRotation=0f;
-    
-    Vector2 _lookInput = Vector2.zero;
+    [SerializeField] private Transform _playerCamera;
+    [SerializeField] private float _xClamp=89f;
+    private float _xRotation =0f;
+
+    private Vector2 _lookInput = Vector2.zero;
 
     private void Start()
     {
@@ -27,13 +27,14 @@ public class Look : MonoBehaviour
 
     private void Update()
     {
-        if(Mouse.current.leftButton.wasPressedThisFrame) HideCursor(false);
-        if(Mouse.current.rightButton.wasPressedThisFrame) HideCursor(true);
+        if(Keyboard.current.escapeKey.wasPressedThisFrame) HideCursor(false);
+        if(Mouse.current.leftButton.wasPressedThisFrame) HideCursor(true);
+
         transform.Rotate(transform.up,_lookInput.x*_xSensivity);
         VerticalLookMovement();
     }
 
-    void VerticalLookMovement()
+    private void VerticalLookMovement()
     {
         _xRotation -= _lookInput.y * _ySensivity;
         _xRotation = Mathf.Clamp(_xRotation, -_xClamp, _xClamp);
@@ -42,7 +43,7 @@ public class Look : MonoBehaviour
         _playerCamera.eulerAngles = TargetRot;
     }
 
-    public void HideCursor(bool pValue)
+    private void HideCursor(bool pValue)
     {
         if (pValue)
         {
