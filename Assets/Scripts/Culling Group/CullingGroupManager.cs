@@ -111,19 +111,4 @@ public class CullingGroupManager : MonoBehaviour
         else if(pEvent.hasBecomeInvisible||pEvent.currentDistance==3)
             _groupItems[pEvent.index].gameObject.SetActive(false);
     }
-
-
-
-    /// <summary>
-    /// It shows the BoundingSphere data of each object.
-    /// </summary>
-    private void OnDrawGizmosSelected() 
-    {
-        if(!EditorApplication.isPlaying) return;
-        Gizmos.color = Color.red;
-        for (int i = 0; i < _spheres.Length; i++)
-        {
-            Gizmos.DrawWireSphere(_spheres[i].position,_spheres[i].radius);
-        }
-    }
 }
