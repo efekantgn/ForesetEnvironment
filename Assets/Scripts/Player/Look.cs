@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
-/// Bu class Camera rotation işlemleri ile sorumlu
+/// This class is responsible for Look operations.
 /// </summary>
 public class Look : MonoBehaviour
 {
@@ -12,7 +12,7 @@ public class Look : MonoBehaviour
     [SerializeField] private Transform _playerCamera;
 
     /// <summary>
-    /// Cameranın max/min olabileceği açı.
+    /// The Angle that camera can be max/min.
     /// </summary>
     [SerializeField] private float _xClamp = 89f;
     private float _xRotation = 0f;
@@ -27,7 +27,7 @@ public class Look : MonoBehaviour
     private void Update()
     {
         ///<summary>
-        /// Input systemindeki ilgili tuşa basıldı mı kontrolü
+        /// Input system has been pressed.
         /// </summary>
         if(Keyboard.current.escapeKey.wasPressedThisFrame) 
             HideCursor(false);
@@ -37,16 +37,14 @@ public class Look : MonoBehaviour
         VerticalLookMovement();
 
         ///<summary>
-        /// karakterin yatay dönmesinden sorulu code satırı.
-        /// Kamerayı değil karakteri dödürüyor.
+        /// The line of code responsible for horizontal rotation of the character.
         /// </summary>
         transform.Rotate(transform.up,_lookInput.x*_xSensivity);
     }
 
 
     /// <summary>
-    /// Kameranın Dikey açısınından sorumlu olan method.
-    /// Sadece kamerayı çeviriyor. Kafa sabit kalıyor.
+    /// The method responsible for the Vertical angle of the camera.
     /// </summary>
     private void VerticalLookMovement()
     {
@@ -59,7 +57,7 @@ public class Look : MonoBehaviour
 
 
     /// <summary>
-    /// Cusorun gizlenmesinden sorumlu method.
+    /// The method responsible for opening and closing the cursor.
     /// </summary>
     /// <param name="pValue">true for hide, false for show</param>
     private void HideCursor(bool pValue)
@@ -74,8 +72,8 @@ public class Look : MonoBehaviour
 
 
     /// <summary>
-    /// _lookInput değerinin setlenmesinden sorumlu method.
-    /// Mouse hareket ettiği zaman çalışıyor.
+    /// Responsible for setting _lookInput value
+    /// Runs when mouse moved.
     /// </summary>
     /// <param name="pInput"></param>
     public void SetLookInput(Vector2 pInput)

@@ -2,7 +2,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
-/// Bu sınıf Input Action Assetten gelen inputların handle edilmesinden ve ilgili classlara gerekli bilgiyi iletmekten sorumlu.
+/// This class is responsible for handling the inputs coming from the Input Action Asset 
+/// and passing the necessary information to the relevant classes.
 /// </summary>
 public class InputManager : MonoBehaviour
 {
@@ -10,8 +11,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private Look _look;
 
     /// <summary>
-    /// Input action assetin referansı. 
-    /// Direk new ile initialize edilebiliyor çünkü C# scriptini generateledim.
+    /// Input action asset referance. 
     /// </summary>
     private PlayerInputActionMap _inputs;
 
@@ -22,7 +22,7 @@ public class InputManager : MonoBehaviour
 
 
     /// <summary>
-    /// Asset ve Map Initialize edilmesi
+    /// Asset and Map Initialization.
     /// </summary>
     private void Awake()
     {
@@ -32,7 +32,7 @@ public class InputManager : MonoBehaviour
     }
 
     /// <summary>
-    /// İlgili actionlara methodların subscribe edilmesi.
+    /// Subscribing methods to relevant actions.
     /// </summary>
     private void OnEnable()
     {
@@ -45,7 +45,7 @@ public class InputManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Subscribe edilen methodların unsubcribe edilmesi
+    /// Unsubscribing subscribed methods
     /// </summary>
     private void OnDisable()
     {
@@ -53,6 +53,7 @@ public class InputManager : MonoBehaviour
         _inGameControls.Look.performed -= LookPerformed;
         _inGameControls.Sprint.started -= SprintStarted;
         _inGameControls.Sprint.canceled -= SprintCanceled;
+        _inGameControls.Jump.performed -= JumpPerformed;
         _inputs.Disable();
     }
 
@@ -63,7 +64,7 @@ public class InputManager : MonoBehaviour
         _movement.Jump();
     }
     /// <summary>
-    /// Sprint butonuna basıldığında Movement._isSprinting değerine true ataması yapılıyor.
+    /// When the Sprint button is pressed, the Movement._isSprinting value is assigned to true.
     /// </summary>
     /// <param name="context">
     private void SprintStarted(InputAction.CallbackContext context)
@@ -71,7 +72,7 @@ public class InputManager : MonoBehaviour
         _movement.SetSprinting(true);
     }
     /// <summary>
-    /// Sprint butonuna basıldığında Movement._isSprinting değerine false ataması yapılıyor.
+    /// When the Sprint button is pressed, the Movement._isSprinting value is assigned false .
     /// </summary>
     /// <param name="context">
     private void SprintCanceled(InputAction.CallbackContext context)
@@ -80,7 +81,7 @@ public class InputManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Look actionı Invokelandığı zaman Look._lookInput değerine okunan değerin ataması yapılıyor.
+    /// When the Look action is invoked, the read value is assigned to the Look._lookInput value.
     /// </summary>
     /// <param name="context">
     private void LookPerformed(InputAction.CallbackContext context)
@@ -89,7 +90,7 @@ public class InputManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Movement actionı Invokelandığı zaman Movement._horizontalInput değerine okunan değerin ataması yapılıyor.
+    /// When the Movement action is invoked, the value read is assigned to the Movement._horizontalInput value.
     /// </summary>
     /// <param name="context">
     private void MovementPerformed(InputAction.CallbackContext context)

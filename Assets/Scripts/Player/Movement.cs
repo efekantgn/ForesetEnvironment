@@ -1,8 +1,8 @@
 using UnityEngine;
 
 /// <summary>
-/// Karakterin hareketinden sorumlu olan class
-/// Yerçekimi fiziğini class hesaplayıp işlem yapıyor.
+/// The class responsible for the character's movement
+/// Gravity is calculated manually here.
 /// </summary>
 public class Movement : MonoBehaviour
 {
@@ -26,8 +26,8 @@ public class Movement : MonoBehaviour
     private void Update()
     {
         /// <summary>
-        /// Gelen inputlar ile bir hız oluşturuluyor.
-        /// Bunun sonucunda da karakterin hareket etmesi hız ile yapılıyor.
+        /// A speed is created with incoming inputs.
+        /// As a result, the character moves with speed.
         /// </summary>
         Vector3 Velocity = (transform.right*_horizontalInput.x+ transform.forward*_horizontalInput.y)*_speed;
 
@@ -37,7 +37,7 @@ public class Movement : MonoBehaviour
         ResetVerticalVelocity();
 
         /// <summary>
-        /// Dikey haraketin aktarılması için hesaplanan dikey hız vektöre ekleniyor.
+        /// The calculated vertical velocity is added to the vector to transfer the vertical motion.
         /// </summary>
         Velocity.y = _verticalVelocity;
         _characterController.Move(Velocity * Time.deltaTime);
@@ -46,8 +46,8 @@ public class Movement : MonoBehaviour
 
 
     /// <summary>
-    /// Karakterin yerçekimini hesaplayan method.
-    /// Düşerken hızını ivmeli olarak arttırılmasını sağlıyor.
+    /// This method calcuşates the gravity of the character.
+    /// It's falling with acceleration.
     /// </summary>
     private void ResetVerticalVelocity()
     {
@@ -62,8 +62,8 @@ public class Movement : MonoBehaviour
     }
 
     /// <summary>
-    /// _horizontalInput değerinin setlenmesinden sorumlu method.
-    /// Hareket inputu geldiği zaman çalışıyor.
+    /// Responsible for setting _horisontalInput value
+    /// Runs when movement input invoked.
     /// </summary>
     /// <param name="pInput"></param>
     public void SetHorizontalInput(Vector2 pInput)
@@ -73,7 +73,7 @@ public class Movement : MonoBehaviour
 
 
     /// <summary>
-    /// Jump tuşuna basıldığı zaman çalışıyor.
+    /// Runs when jump input invoked.
     /// </summary>
     public void Jump()
     {
@@ -81,8 +81,8 @@ public class Movement : MonoBehaviour
             _verticalVelocity+=_jumpForce;
     }
     /// <summary>
-    /// _isSprinting değerinin setlenmesinden sorumlu method.
-    /// Sprint tuşuna basıldığı zaman çalışıyor.
+    /// Responsible for setting _isSprinting value
+    /// Runs when sprint input invoked.
     /// </summary>
     /// <param name="pInput"></param>
     public void SetSprinting(bool pIsSprinting)

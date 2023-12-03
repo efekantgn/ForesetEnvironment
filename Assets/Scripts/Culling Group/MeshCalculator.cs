@@ -2,19 +2,19 @@ using UnityEngine;
 
 
 /// <summary>
-/// Verilen mesh üzerinden meshin center noktasını ve
-/// verilen meshin boundunun en uzun kenarının yarısını yarıçap olarak hesaplıyor
+/// It calculates the center point of the given mesh 
+/// and half of the longest side of its bound as radius.
 /// </summary>
 public static class MeshDataGetter 
 {
     /// <summary>
-    /// Eğer yapılan işlemler sonucunda bir mesh datasına ulaşılamazsa 
-    /// Default olarak 1 değerini kullanıyorum.
+    /// If no mesh data can be obtained as a result of the operations performed,
+    /// I use the value 1 as the default.
     /// </summary>
     private const float DEFAULT_ITEM_RADIUS = 1f;
 
     /// <summary>
-    /// Meshin en uzun kenarının yarısını döndürüyor.
+    /// It returns half of the longest edge of the mesh.
     /// </summary>
     /// <param name="pMesh"></param>
     /// <returns>Half of longest edge </returns>
@@ -27,8 +27,9 @@ public static class MeshDataGetter
 
 
     /// <summary>
-    /// Verilen transforma göre işlemleri ayırıyor.
-    /// LOD Group olan itemlar için LOD group üzerinden işlem yapıyor.
+    /// It separates the operations according to the given transform.
+    /// For items with LOD Group, transactions are made with LOD group.
+    /// For items with MeshFilter, transactions are made with MeshFilter.
     /// </summary>
     /// <param name="pTransform">Transforms that has MeshFilter or LOD group</param>
     /// <returns>
@@ -52,8 +53,9 @@ public static class MeshDataGetter
     }
 
     /// <summary>
-    /// Verilen transforma göre işlemleri ayırıyor.
-    /// LOD Group olan itemlar için LOD group üzerinden işlem yapıyor.
+    /// It separates the operations according to the given transform.
+    /// For items with LOD Group, transactions are made with LOD group.
+    /// For items with MeshFilter, transactions are made with MeshFilter.
     /// </summary>
     /// <param name="pTransform">Transforms that has MeshFilter or LOD group</param>
     /// <returns>
@@ -62,7 +64,6 @@ public static class MeshDataGetter
     /// </returns>
     public static Vector3 GetMeshCenter(Transform pItem)
     {
-
         if(pItem.TryGetComponent(out Renderer Renderer))
         {
             return Renderer.bounds.center;

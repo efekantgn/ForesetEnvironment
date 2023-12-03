@@ -3,7 +3,7 @@ using UnityEngine;
 
 
 /// <summary>
-/// Objelerin dinamik olarak yüklenmesinden ve kaldırılmasından sorumlu olan class.
+/// The class responsible for dynamically loading and unloading objects.
 /// </summary>
 public class CullingGroupManager : MonoBehaviour
 {
@@ -11,7 +11,7 @@ public class CullingGroupManager : MonoBehaviour
     [SerializeField] private Transform _player;
 
     /// <summary>
-    /// Objelerin max ne kadar alan içerisinde renderlanacak
+    /// What is the maximum distance for objects will be activated?
     /// </summary>
     [SerializeField] private float _renderDistance;
 
@@ -20,15 +20,15 @@ public class CullingGroupManager : MonoBehaviour
     private BoundingSphere[] _spheres;
 
     /// <summary>
-    /// Bazı objelerin yakınımdayken mutla aktif olmasını istediğimiz değer.
-    /// Exmple: köprünün üstündeyken köprüye bakmadığımızda kapanırsa
-    /// köprüden düşüyoruz.
+    /// The value we want some objects to be active when they are near me.
+    /// Exmple: When we are on the bridge and do not look at it,
+    /// it closes and we fall off the bridge.
     /// </summary>
     private float _mustRenderDistance=1f;
     private Transform[] _groupItems;
 
     /// <summary>
-    /// İlgili Arraylerin Initalize edilmesi
+    /// Initializing the Arrays.
     /// </summary>
     private void Awake() 
     {
@@ -57,8 +57,8 @@ public class CullingGroupManager : MonoBehaviour
     }
 
     /// <summary>
-    /// scriptin bağlı olduğu transformun bütün çocuklarının dynamic load işlemine dahil olacağı bir senaryo kurdum.
-    /// ondan dolayı scriptin bütün çoklarına erişme şekli.
+    /// I set up a scenario in which all children of the transform to 
+    /// which the script is connected would be included in the dynamic loading.
     /// </summary>
     private void FillGroupItems()
     {
@@ -70,9 +70,9 @@ public class CullingGroupManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Culling Group işlemi için gereken BoundingSphere değerlerinin atanması.
-    /// İçerisinde kendi oluşturduğum static classtan mesh dataları ile işlem yaptırıp 
-    /// meshin centerını ve yarıçap ataması için gerekli olan değeri alıyorum.
+    /// Assigning the Bounding Sphere values ​​required for the Culling Group operation.
+    /// I process the mesh data from the static class I created 
+    /// and get the value required for the center of the mesh and radius assignment.
     /// </summary> 
     private void SetSphereDatas()
     {
@@ -84,8 +84,8 @@ public class CullingGroupManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Culling Group değerlerinin Initialize edilmesi
-    /// and GroupStateChanged subscribed to OnStateChanged delegate
+    /// Initializing Culling Group values.
+    /// GroupStateChanged subscribed to OnStateChanged delegate.
     /// </summary>
     private void InitializeCullingGroup()
     {
@@ -97,11 +97,11 @@ public class CullingGroupManager : MonoBehaviour
 
 
     /// <summary>
-    /// onStateChanged tetiklendiğinde çalışıyor.
-    /// obje görünür olduysa veya uzaklığı 1. birimdeyse eventIndexinden gameobject açılıyor.
-    /// obje görünmez hale geçtiyse veya uzaklığı 3. bölgede ise gameobject kapanıyor.
-    /// GameObject üzerinden işlem yaptım çünkü dökümanda Object olarak belirtilmişti.
-    /// Kendi fikrim sadece Mesh ve animasyonunu kapatmak olurdu.
+    /// It works when onStateChanged is Invoked.
+    /// If the object is visible or its distance is at the 1st zone, the gameobject is opened from the event.Index.
+    /// If the object becomes invisible or its distance is in the 3rd zone, the gameobject closes.
+    /// I performed the operation with GameObject because it was specified as Object in the document.
+    /// My own idea would be to just turn off the Mesh and its animations.
     /// </summary>
     /// <param name="pEvent"></param>
     private void GroupStateChanged(CullingGroupEvent pEvent)
@@ -115,7 +115,7 @@ public class CullingGroupManager : MonoBehaviour
 
 
     /// <summary>
-    ///  Her bir objenin BoundingSphere datasını görmek için kullandım.
+    /// It shows the BoundingSphere data of each object.
     /// </summary>
     private void OnDrawGizmosSelected() 
     {
