@@ -41,6 +41,7 @@ public class InputManager : MonoBehaviour
         _inGameControls.Look.performed += LookPerformed;
         _inGameControls.Sprint.started += SprintStarted;
         _inGameControls.Sprint.canceled += SprintCanceled;
+        _inGameControls.Jump.performed += JumpPerformed;
     }
 
     /// <summary>
@@ -56,6 +57,11 @@ public class InputManager : MonoBehaviour
     }
 
     #region ActionMethods
+
+    private void JumpPerformed(InputAction.CallbackContext context)
+    {
+        _movement.Jump();
+    }
     /// <summary>
     /// Sprint butonuna basıldığında Movement._isSprinting değerine true ataması yapılıyor.
     /// </summary>

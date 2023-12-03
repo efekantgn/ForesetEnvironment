@@ -9,9 +9,11 @@ public class Movement : MonoBehaviour
     
     [SerializeField] private float _speed=3f;
     [SerializeField] private float _sprintSpeedMultiplier = 2f;
+    [SerializeField] private float _jumpForce = 5f;
     [SerializeField] private float _gravity = -9.81f;
 
     private bool _isSprinting = false;
+    
     private float _verticalVelocity = 0;
     private CharacterController _characterController;
     private Vector2 _horizontalInput;
@@ -69,6 +71,15 @@ public class Movement : MonoBehaviour
         _horizontalInput = pInput;
     }
 
+
+    /// <summary>
+    /// Jump tuşuna basıldığı zaman çalışıyor.
+    /// </summary>
+    public void Jump()
+    {
+        if(_characterController.isGrounded)
+            _verticalVelocity+=_jumpForce;
+    }
     /// <summary>
     /// _isSprinting değerinin setlenmesinden sorumlu method.
     /// Sprint tuşuna basıldığı zaman çalışıyor.
