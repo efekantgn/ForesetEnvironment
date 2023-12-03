@@ -1,16 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Bu class Camera rotation işlemleri ile sorumlu
+/// </summary>
 public class Look : MonoBehaviour
 {
+    
     [SerializeField] private  float _xSensivity = 1;
     [SerializeField] private float _ySensivity = 1;
     [SerializeField] private Transform _playerCamera;
-    [SerializeField] private float _xClamp=89f;
-    private float _xRotation =0f;
+
+    /// <summary>
+    /// Cameranın max/min olabileceği açı.
+    /// </summary>
+    [SerializeField] private float _xClamp = 89f;
+    private float _xRotation = 0f;
     private Vector2 _lookInput = Vector2.zero;
 
     private void Start()
@@ -18,22 +23,31 @@ public class Look : MonoBehaviour
         HideCursor(true);
     }
 
-    public void SetLookInput(Vector2 pInput)
-    {
-        _lookInput = pInput;
-    }
 
     private void Update()
     {
+        ///<summary>
+        /// Input systemindeki ilgili tuşa basıldı mı kontrolü
+        /// </summary>
         if(Keyboard.current.escapeKey.wasPressedThisFrame) 
             HideCursor(false);
         if(Mouse.current.leftButton.wasPressedThisFrame) 
             HideCursor(true);
 
         VerticalLookMovement();
+
+        ///<summary>
+        /// karakterin yatay dönmesinden sorulu code satırı.
+        /// Kamerayı değil karakteri dödürüyor.
+        /// </summary>
         transform.Rotate(transform.up,_lookInput.x*_xSensivity);
     }
 
+
+    /// <summary>
+    /// Kameranın Dikey açısınından sorumlu olan method.
+    /// Sadece kamerayı çeviriyor. Kafa sabit kalıyor.
+    /// </summary>
     private void VerticalLookMovement()
     {
         _xRotation -= _lookInput.y * _ySensivity;
@@ -43,6 +57,11 @@ public class Look : MonoBehaviour
         _playerCamera.eulerAngles = TargetRot;
     }
 
+
+    /// <summary>
+    /// Cusorun gizlenmesinden sorumlu method.
+    /// </summary>
+    /// <param name="pValue">true for hide, false for show</param>
     private void HideCursor(bool pValue)
     {
         Cursor.visible = !pValue;
@@ -53,4 +72,14 @@ public class Look : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
     }
 
+
+    /// <summary>
+    /// _lookInput değerinin setlenmesinden sorumlu method.
+    /// Mouse hareket ettiği zaman çalışıyor.
+    /// </summary>
+    /// <param name="pInput"></param>
+    public void SetLookInput(Vector2 pInput)
+    {
+        _lookInput = pInput;
+    }
 }

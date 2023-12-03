@@ -1,16 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
+/// <summary>
+/// Karakterin hareketinden sorumlu olan class
+/// Yerçekimi fiziğini class hesaplayıp işlem yapıyor.
+/// </summary>
 public class Movement : MonoBehaviour
 {
     
     [SerializeField] private float _speed=3f;
     [SerializeField] private float _sprintSpeedMultiplier = 2f;
     [SerializeField] private float _gravity = -9.81f;
-    
+
     private bool _isSprinting = false;
     private float _verticalVelocity = 0;
     private CharacterController _characterController;
@@ -23,18 +23,30 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
-
-        Vector3 Velocity = _speed*(transform.right*_horizontalInput.x+ transform.forward*_horizontalInput.y);
+        /// <summary>
+        /// Gelen inputlar ile bir hız oluşturuluyor.
+        /// Bunun sonucunda da karakterin hareket etmesi hız ile yapılıyor.
+        /// </summary>
+        Vector3 Velocity = (transform.right*_horizontalInput.x+ transform.forward*_horizontalInput.y)*_speed;
 
         if (_isSprinting) 
             Velocity *= _sprintSpeedMultiplier;
 
         ResetVerticalVelocity();
+
+        /// <summary>
+        /// Dikey haraketin aktarılması için hesaplanan dikey hız vektöre ekleniyor.
+        /// </summary>
         Velocity.y = _verticalVelocity;
         _characterController.Move(Velocity * Time.deltaTime);
 
     }
 
+
+    /// <summary>
+    /// Karakterin yerçekimini hesaplayan method.
+    /// Düşerken hızını ivmeli olarak arttırılmasını sağlıyor.
+    /// </summary>
     private void ResetVerticalVelocity()
     {
         if (_verticalVelocity < 0.0f && _characterController.isGrounded)
@@ -47,10 +59,21 @@ public class Movement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// _horizontalInput değerinin setlenmesinden sorumlu method.
+    /// Hareket inputu geldiği zaman çalışıyor.
+    /// </summary>
+    /// <param name="pInput"></param>
     public void SetHorizontalInput(Vector2 pInput)
     {
         _horizontalInput = pInput;
     }
+
+    /// <summary>
+    /// _isSprinting değerinin setlenmesinden sorumlu method.
+    /// Sprint tuşuna basıldığı zaman çalışıyor.
+    /// </summary>
+    /// <param name="pInput"></param>
     public void SetSprinting(bool pIsSprinting)
     {
         _isSprinting = pIsSprinting;
