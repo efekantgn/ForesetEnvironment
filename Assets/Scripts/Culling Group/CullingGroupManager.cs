@@ -1,76 +1,85 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class CullingGroupManager : MonoBehaviour
 {
 
     [SerializeField] private Transform _player;
-    [SerializeField] private float[] _groupDistances;
+    [SerializeField] private float _renderDistance;
+    [SerializeField] private float _mustRenderDistance=1f;
     [SerializeField] private CullingGroup _group;
     [SerializeField] private BoundingSphere[] _spheres;
-    private List<Transform> _groupItems;
-
-
-    private void Awake() {
+    private Transform[] _groupItems;
+    private void Awake() 
+    {
         _group = new CullingGroup();
-        _groupItems = new List<Transform>();
-
+        _groupItems = new Transform[transform.childCount];
+        _spheres = new BoundingSphere[transform.childCount];
     }
 
-    private void Start() {
-
+    private void Start() 
+    {
         FillGroupItems();
-        _spheres = new BoundingSphere[_groupItems.Count];
         SetSphereDatas();
         InitializeCullingGroup();
     }
 
-    private void Update() {
+    private void Update() 
+    {
         _group.SetDistanceReferencePoint(_player);
     }
 
-    private void OnDestroy() {
+    private void OnDestroy() 
+    {
         _group.Dispose();
         _group=null;
     }
-    private void FillGroupItems(){
 
+    
+    private void FillGroupItems()
+    {
         for (int i = 0; i < transform.childCount; i++)
         {
-            _groupItems.Add(transform.GetChild(i));
+            _groupItems[i]=transform.GetChild(i);
         }
 
     }
-    private void SetSphereDatas(){
-
-        for(int i =0;i < _groupItems.Count;i++)
+    private void SetSphereDatas()
+    {
+        for(int i =0;i < _groupItems.Length;i++)
         {
-            _spheres[i].position=_groupItems[i].position;
-            _spheres[i].radius=1f;
+            _spheres[i].position= MeshDataGetter.GetMeshCenter(_groupItems[i]);
+            _spheres[i].radius= MeshDataGetter.GetItemRadius(_groupItems[i]);
         }
     }
 
-    private void InitializeCullingGroup(){
-
+    private void InitializeCullingGroup()
+    {
         _group.SetBoundingSpheres(_spheres);
-        _group.SetBoundingDistances(_groupDistances);
+        _group.SetBoundingDistances(new float[]{0,_mustRenderDistance,_renderDistance});
         _group.targetCamera = Camera.main;
         _group.onStateChanged += GroupStateChanged;
     }
 
     private void GroupStateChanged(CullingGroupEvent pEvent)
     {
-        if(pEvent.hasBecomeVisible||pEvent.currentDistance<2)
+        if(pEvent.hasBecomeVisible||pEvent.currentDistance==1)
             _groupItems[pEvent.index].gameObject.SetActive(true);
-        else
+        else if(pEvent.hasBecomeInvisible||pEvent.currentDistance==3)
             _groupItems[pEvent.index].gameObject.SetActive(false);
     }
 
-    private void OnDrawGizmosSelected() {
+
+    private void OnDrawGizmosSelected() 
+    {
+        if(!EditorApplication.isPlaying) return;
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(_player.position,_groupDistances[0]);
-        Gizmos.DrawWireSphere(_player.position,_groupDistances[1]);
-        Gizmos.DrawWireSphere(_player.position,_groupDistances[2]);
+        for (int i = 0; i < _spheres.Length; i++)
+        {
+            Gizmos.DrawWireSphere(_spheres[i].position,_spheres[i].radius);
+            
+        }
     }
 }

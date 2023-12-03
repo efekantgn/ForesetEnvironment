@@ -8,11 +8,9 @@ public class Look : MonoBehaviour
 {
     [SerializeField] private  float _xSensivity = 1;
     [SerializeField] private float _ySensivity = 1;
-
     [SerializeField] private Transform _playerCamera;
     [SerializeField] private float _xClamp=89f;
     private float _xRotation =0f;
-
     private Vector2 _lookInput = Vector2.zero;
 
     private void Start()
@@ -27,11 +25,13 @@ public class Look : MonoBehaviour
 
     private void Update()
     {
-        if(Keyboard.current.escapeKey.wasPressedThisFrame) HideCursor(false);
-        if(Mouse.current.leftButton.wasPressedThisFrame) HideCursor(true);
+        if(Keyboard.current.escapeKey.wasPressedThisFrame) 
+            HideCursor(false);
+        if(Mouse.current.leftButton.wasPressedThisFrame) 
+            HideCursor(true);
 
-        transform.Rotate(transform.up,_lookInput.x*_xSensivity);
         VerticalLookMovement();
+        transform.Rotate(transform.up,_lookInput.x*_xSensivity);
     }
 
     private void VerticalLookMovement()
@@ -45,16 +45,12 @@ public class Look : MonoBehaviour
 
     private void HideCursor(bool pValue)
     {
-        if (pValue)
-        {
+        Cursor.visible = !pValue;
+
+        if (pValue) 
             Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-        else
-        {
+        else 
             Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
     }
 
 }
