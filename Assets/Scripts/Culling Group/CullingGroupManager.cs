@@ -65,6 +65,7 @@ public class CullingGroupManager : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++)
         {
             _groupItems[i]=transform.GetChild(i);
+            transform.GetChild(i).gameObject.SetActive(false);
         }
 
     }

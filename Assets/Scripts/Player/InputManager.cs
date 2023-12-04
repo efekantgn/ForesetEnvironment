@@ -16,7 +16,7 @@ public class InputManager : MonoBehaviour
     private PlayerInputActionMap _inputs;
 
     /// <summary>
-    /// Input Action assetteki map erişimi.
+    /// Input Action map referance.
     /// </summary>
     private PlayerInputActionMap.InGameControlActions _inGameControls;
 

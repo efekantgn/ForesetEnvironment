@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 654684864805361010}
   - component: {fileID: 5715058869806490115}
+  - component: {fileID: 1993765446702989139}
   m_Layer: 0
   m_Name: PT_Ore_Rock_01_split
   m_TagString: Untagged
@@ -62,6 +63,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 1331477074281420289}
   m_Enabled: 1
+--- !u!65 &1993765446702989139
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 170636262904696776}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5046973, y: 0.2215802, z: 1.7065762}
+  m_Center: {x: -0.030281901, y: 0.07511166, z: 0.08411616}
 --- !u!1 &1868188171543214933
 GameObject:
   m_ObjectHideFlags: 0
